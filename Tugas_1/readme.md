@@ -1,4 +1,10 @@
 ## Projek Tugas 1: Automatic Sudoku Solver menggunakan algoritma backtracking
+
+#### Disclaimer: 
+
+Program, flowchart, dan semua elemen lain projek ini dibuat 100% tanpa bantuan AI.
+
+
 #### Motivasi:
 Algoritma backtracking dapat digunakan pada robot search and rescue maka dari itu, dibuatlah implementasi algortima backtracking ini
 
@@ -20,6 +26,17 @@ Jika terdapat solusi, program akan menampilkannya beserta dengan total waktu run
 
 Dapat juga dilihat proses step by step ketika algoritma backtracking berjalan (namun tidak direkomendasikan, karena akan memakan runtime yang sangat lama).
 
+
+
+Berikut merupakan flowchart dari program secara umum:
+
+![Flowchart program](https://github.com/FieryBanana101/Tugas-URO/blob/main/Tugas_1/Images/Program_flowchart.png)
+
+
+
+Berikut merupakan flowchart dari algoritma backtracking:
+
+![Backtracking flowchart](https://github.com/FieryBanana101/Tugas-URO/blob/main/Tugas_1/Images/Backtracking_flowchart.png)
 
 #### Penggunaan:
 
@@ -67,6 +84,8 @@ Contoh:
 ```
 
 Dengan '0' merepresentasikan kotak kosong pada sudoku. 
+
+Contoh sudoku dalam format file.txt yang dapat langsung digunakan dapat dilihat pada folder "sudoku_example_txt" (silahkan didownload).
 
 
 **Note:** 
