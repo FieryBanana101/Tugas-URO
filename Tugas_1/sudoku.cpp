@@ -26,11 +26,13 @@ void print_sudoku(vector<vector<int>>&board){
 
 // Determine wheter current sudoku board is valid or not
 bool isValidState(vector<vector<int>>board, int i, int j, int num){
-
+    
+    // check for similar number in column and row	
     for(int k = 0;k<9;k++){
         if(board[i][k]==num||board[k][j]==num)return false;
     }
 
+    // check for similar number in a group
     int y = i/3 * 3, x = j/3 * 3;
     for(int p = y;p<y+3;p++){
         for(int q = x;q<x+3;q++){
@@ -46,33 +48,44 @@ bool isValidState(vector<vector<int>>board, int i, int j, int num){
 
 // Solve using backtracking algorithm
 bool solveSudokuRecursive(vector<vector<int>>board, vector<vector<int>> &ans, bool verbose){ 
+	
+    // if verbose option is on, then show the algorithm step by step (print the sudoku board each step).
     if(verbose){
         cout << "\nCurrent step:\n";
         print_sudoku(board);
         this_thread::sleep_for(chrono::milliseconds(100));
     }
+    // Iterate over all position, try all possible number and backtrack if no valid number is found
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
+		
             if(board[i][j] != 0)continue;
-            for(int num = 1;num<=9;num++){
-                bool valid = isValidState(board, i, j, num);
-                if(!valid && num == 9)return false;
 
+            for(int num = 1;num<=9;num++){
+		    
+                bool valid = isValidState(board, i, j, num);
+		    
+                if(!valid && num == 9)return false;
                 else if(!valid)continue;
                 else{
                     board[i][j] = num;
+			
                     if(solveSudokuRecursive(board, ans, verbose)){
                         return true;
                     }
+			    
                     else{
                         board[i][j] = 0;
                         if(num == 9)return false;
                         continue;
                     }
+			
                 }
             }
         }
     }
+	
+    // if program reaches here there is a solution, assign the solved board to the ans board.
     ans = board;
     return true;
 }
@@ -80,21 +93,22 @@ bool solveSudokuRecursive(vector<vector<int>>board, vector<vector<int>> &ans, bo
 // Driver code for the backtracking algoritm, also handle final output
 void solveSudoku(vector<vector<int>>board, vector<vector<int>> &ans, bool verbose){
 
+    // Print initial (unsolved) sudoku board condition.
     cout << "\nInitial sudoku board: \n";
     print_sudoku(board);
 
-    if(solveSudokuRecursive(board, ans, verbose)){
+    if(solveSudokuRecursive(board, ans, verbose)){  // A solution has been found
         cout << "\nSolution: \n\n";
         print_sudoku(ans);
     }
 
-    else{
+    else{  // No solution is found
         cout << "No valid solution exist!\n";
     }
     cout << '\n';
 }
 
-// Show manual page if parameter is invalid
+// Show manual page for user guide.
 void show_manual(){
     printf("\nManual page:\n\nAutomatic sudoku solver using backtracking algorithm.\n");
     printf("\n Usage: \n");
@@ -145,7 +159,7 @@ int main(int argc, char *argv[]){
     }
 
 
-    // form sudoku board
+    // form a sudoku board from user file
     vector<vector<int>>sudokuBoard(9, vector<int>(9,0));
     cout << input << '\n';
     int i = 0, j = 0;
@@ -176,7 +190,7 @@ int main(int argc, char *argv[]){
     solveSudoku(sudokuBoard, sudokuBoard, verbose);
 
     auto endTime = chrono::high_resolution_clock::now(); // end of runtime
-    auto duration = chrono::duration_cast<chrono::milliseconds>(endTime - startTime);
+    auto duration = chrono::duration_cast<chrono::milliseconds>(endTime - startTime); // total runtime duration in milliseconds
 
     // output runtime
     cout << "Elapsed time: " << duration.count() << " ms\n";
